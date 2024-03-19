@@ -1,0 +1,179 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.09736482433202683 0.0877661364549847 0.9913713715225786 1.6830444254752626
+  position 3.8311076835869704 -35.57369670107709 7.3269294823525115
+}
+Robot {
+  translation 0 0 0.169
+  rotation -0.13721604130040504 -0.9830451983681605 -0.12163016063110953 2.3357627338515928e-14
+  children [
+    Propeller {
+      shaftAxis 0.173648 0 0.984808
+      centerOfThrust -0.1275 0.1275 0.105
+      thrustConstants 0.0153 0
+      torqueConstants 0.0019 0
+      device RotationalMotor {
+        name "motor_xmyp"
+        acceleration 300
+        maxVelocity 683.82
+        maxTorque 1.2
+      }
+      slowHelix Solid {
+        translation -0.1275 0.1275 0.105
+        rotation 0.17364796311995495 0 0.9848077908426043 5.730017332084662
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0 1 0
+              metalness 0
+            }
+            geometry Mesh {
+              url [
+                "prop_scaled.stl"
+              ]
+            }
+          }
+        ]
+      }
+    }
+    Propeller {
+      shaftAxis 0.173648 0 0.984808
+      centerOfThrust -0.1275 -0.1275 0.105
+      thrustConstants -0.0153 0
+      torqueConstants 0.0019 0
+      device RotationalMotor {
+        name "motor_xmym"
+        acceleration 300
+        maxVelocity 683.82
+        maxTorque 1.2
+      }
+      slowHelix Solid {
+        translation -0.1275 -0.1275 0.105
+        rotation 0.1736479631199549 0 0.9848077908426043 0.28851691180781225
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0 1 0
+              metalness 0
+            }
+            geometry Mesh {
+              url [
+                "prop_scaled.stl"
+              ]
+            }
+          }
+        ]
+      }
+    }
+    Propeller {
+      shaftAxis -0.173648 0 0.984808
+      centerOfThrust 0.1275 0.1275 0.105
+      thrustConstants -0.0153 0
+      torqueConstants 0.0019 0
+      device RotationalMotor {
+        name "motor_xpyp"
+        acceleration 300
+        maxVelocity 683.82
+        maxTorque 1.2
+      }
+      slowHelix Solid {
+        translation 0.1275 0.1275 0.105
+        rotation -0.1736479631199549 0 0.9848077908426043 0.28851691180781225
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0 1 0
+              metalness 0
+            }
+            geometry Mesh {
+              url [
+                "prop_scaled.stl"
+              ]
+            }
+          }
+        ]
+      }
+    }
+    Propeller {
+      shaftAxis -0.173648 0 0.984808
+      centerOfThrust 0.1275 -0.1275 0.105
+      thrustConstants 0.0153 0
+      torqueConstants 0.0019 0
+      device RotationalMotor {
+        name "motor_xpym"
+        acceleration 300
+        maxVelocity 683.82
+        maxTorque 1.2
+      }
+      slowHelix Solid {
+        translation 0.1275 -0.1275 0.105
+        rotation 0.1736479631199549 -4.010978321950238e-17 -0.9848077908426044 4.754700820015718
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0 1 0
+              metalness 0
+            }
+            geometry Mesh {
+              url [
+                "prop_scaled.stl"
+              ]
+            }
+          }
+        ]
+      }
+    }
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "drone_solid_scaled.stl"
+        ]
+      }
+      castShadows FALSE
+    }
+    Accelerometer {
+    }
+    InertialUnit {
+      name "imu"
+    }
+    Gyro {
+    }
+    GPS {
+    }
+  ]
+  name "tester_drone"
+  boundingObject Box {
+    size 0.5 0.34 0.34
+  }
+  physics Physics {
+    mass 1.5
+    centerOfMass [
+      0 0 0
+    ]
+  }
+  controller "quadcopter_hover"
+}
+TexturedBackground {
+  texture "stadium"
+}
+RectangleArena {
+  floorSize 50 50
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallHeight 5
+  wallAppearance PBRAppearance {
+    baseColor 0.482353 0.482353 0.482353
+  }
+}
