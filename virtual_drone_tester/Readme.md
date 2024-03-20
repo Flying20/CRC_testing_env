@@ -46,7 +46,7 @@ or, alternatively, compile in Webot, which automatically remembers the default p
 
 # Model Considerations
 
-CG: [0 0 .015] in reference to the vehicle center in Webot's reference frame (center of the fuselage is .169m above the global z, and at the local origin of the QRBP)
+CG: [0 0 .015] in reference to the vehicle center in Webot's reference frame
 
 Orientation/Reference Frame in Control Algorithms: conforms to Kristoff's model, where nose up is positive x, pitch is along the y-axis
 
