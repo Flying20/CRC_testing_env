@@ -7,8 +7,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.09736482433202683 0.0877661364549847 0.9913713715225786 1.6830444254752626
-  position 3.8311076835869704 -35.57369670107709 7.3269294823525115
+  orientation -0.18187365434596126 -0.009358425343413733 0.9832773737506307 3.242712322286383
+  position 2.64565318804125 0.49838577508312176 1.0466481056849788
 }
 Robot {
   translation 0 0 0.169
@@ -157,8 +157,12 @@ Robot {
     size 0.5 0.34 0.34
   }
   physics Physics {
-    mass 1.5
+    mass 1.8
     centerOfMass [
+      0 0 0.015
+    ]
+    inertiaMatrix [
+      0.014 0.012 0.02
       0 0 0
     ]
   }
