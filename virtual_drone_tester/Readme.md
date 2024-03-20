@@ -47,15 +47,22 @@ or, alternatively, compile in Webot, which automatically remembers the default p
 # Model Considerations
 
 CG: [0 0 .015] in reference to the vehicle center in Webot's reference frame (center of the fuselage is .169m above the global z, and at the local origin of the QRBP)
+
 Orientation/Reference Frame in Control Algorithms: conforms to Kristoff's model, where nose up is positive x, pitch is along the y-axis
+
 Moments of inertia: Scaled up, then tweeked slightly from the CRC-3 Model (estimation, modeling for a QRBP, **conforming to the Webot reference frame**)
+
 Jxx (pitch) = .014 kg m^2
+
 Jyy (roll) = .012 kg m^2
+
 Jzz (yaw) = .020 kg m^2
 
 Products of inertia: assumed to be ~0 due to the lack of asymetry in the design
+
 Mass: 1.8kg or ~4lb
 
 Aerodynamic forces are not yet considered, but there should be 2 major considerations:
-Rotor wake and subsequent lift generation via the wings
-Fuselage drag (considering that CD ~ .015, somewhat insignificant at this stage)
+
+- Rotor wake and subsequent lift generation via the wings
+- Fuselage drag (considering that CD ~ .015, somewhat insignificant at this stage)
