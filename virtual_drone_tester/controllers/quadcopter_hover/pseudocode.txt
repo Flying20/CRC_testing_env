@@ -1,1 +1,6 @@
 #PID 
+
+stable hover algorithm
+- inner loop - p for position, pid for velocity control
+- outer loop - p for angle, pid for angular rate control - reduce drift
+
