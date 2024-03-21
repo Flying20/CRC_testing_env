@@ -66,3 +66,22 @@ Aerodynamic forces are not yet considered, but there should be 2 major considera
 
 - Rotor wake and subsequent lift generation via the wings
 - Fuselage drag (considering that CD ~ .015, somewhat insignificant at this stage)
+
+
+# Basic Git Commands
+
+To update your fork, here are the basic commands:
+
+```git add "filename.ext"```
+
+If the file is not under your current directory, use the "cd" commands to open the specific folder where the file is in. Ex:
+
+```cd directory_name```
+
+Afterwards, commit and push the changes. But pull before pushing the changes because that will help resolving merge conflicts.
+
+```git commit -m "comment"```
+
+```git pull```
+
+```git push```
