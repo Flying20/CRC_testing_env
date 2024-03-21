@@ -1,6 +1,55 @@
-#PID 
+//PID 
 
+/*
 stable hover algorithm
-- inner loop - p for position, pid for velocity control
-- outer loop - p for angle, pid for angular rate control - reduce drift
+- inner loop - p_pos for position, pid_velo for velocity control
+- outer loop - p_ang for angle, pid_angr for angular rate control - reduce drift
 
+kristoff's reference frame:
+x = yaw
+y = pitch
+z = roll
+
+webot reference frame:
+x = pitch
+y = roll
+z = yaw
+*/
+
+//position
+
+x = gps[2] 
+x'= gps[2] //prev iteration                
+y = gps[0]  
+y'= gps[0] //prev iteration                
+z = gps[1]                 
+z'= gps[1] //prev iteration 
+
+//velocity
+x_v = (x - x')/TIME_STEP
+x_v' = (x - x')/TIME_STEP //prev iteration
+y_v = (y - y')/TIME_STEP
+y_v' = (y - y')/TIME_STEP //prev iteration
+z_v = (z - z')/TIME_STEP
+z_v' = (z - z')/TIME_STEP //prev iteration
+
+
+/*
+//acceleration
+x_a = accelerometer[2] 
+y_a' = accelerometer[2] //prev iteration                
+y_a = accelerometer[0]  
+y_a' = accelerometer[0] //prev iteration                
+z_a = accelerometer[1]                 
+z_a' = accelerometer[1] //prev iteration 
+*/
+
+//target location
+
+x_t = x_t
+y_t = y_t
+z_t = z_t
+
+/* 
+pos feeds into velo, feeds into ang, feeds into ang r of rotors, feeds back pos data
+*/

@@ -9,7 +9,7 @@
 #include <webots/Gyro.hpp>
 #include <webots/Accelerometer.hpp>
 #include <webots/GPS.hpp>
-#include <webots/Keyboard.hpp>
+#include "pid.hpp"
 
 using namespace webots;  
 using namespace std;
@@ -32,64 +32,142 @@ GPS *gps;
 Gyro *gyro;
 InertialUnit *imu;
 Keyboard kb;
-double x;
-double y;
-double z;
-double hover_gain;
-const double base_gain = 5;
-int takeoff_it = 0;
-double velo = 6;
+double x = 0;
+double y = 0;
+double z = 0;
+double x_v = 0;
+double y_v = 0;
+double z_v = 0;
+double x_a = 0;
+double y_a = 0;
+double z_a = 0;
 
-//defining functions
+//defining constants for p_pos and pid_velo
+#define KP_POS  1
+#define ERROR_X  0
+#define ERROR_Y 0
+#define ERROR_Z 0
+#define X_PREV 0.169
+#define Y_PREV 0
+#define Z_PREV 0
+#define X_OUT 0;
+#define Y_OUT 0;
+#define Z_OUT 0;
+
+#define KP_VELO 1
+#define KI_VELO 1
+#define KD_VELO 1
+//#define TAU_VELO 1
+#define MAX_VELO 680
+#define MIN_VELO -680
+#define ERROR_X_V 0
+#define ERROR_Y_V 0
+#define ERROR_Z_V 0
+#define X_V_PREV 0
+#define Y_V_PREV 0
+#define Z_V_PREV 0
+#define X_V_INTEGRATOR 0
+#define X_V_DIFFERENTIATOR 0
+#define ERROR_X_V_PREV 0
+#define Y_V_INTEGRATOR 0
+#define Y_V_DIFFERENTIATOR 0
+#define ERROR_Y_V_PREV 0
+#define Z_V_INTEGRATOR 0
+#define Z_V_DIFFERENTIATOR 0
+#define ERROR_Z_V_PREV 0
+
+//create controller objects
+p_pos_controller pos_controller {
+        KP_POS,
+        ERROR_X,
+        ERROR_Y,
+        ERROR_Z,
+        X_PREV,
+        Y_PREV,
+        Z_PREV,
+        X_OUT,
+        Y_OUT,
+        Z_OUT
+    };
+
+pid_velo_controller velo_controller{
+        KP_VELO,
+        KI_VELO,
+        KD_VELO,
+        //TAU_VELO,
+        MAX_VELO,
+        MIN_VELO,
+        ERROR_X_V,
+        ERROR_Y_V,
+        ERROR_Z_V,
+        X_V_PREV,
+        Y_V_PREV,
+        Z_V_PREV,
+        X_V_INTEGRATOR,
+        X_V_DIFFERENTIATOR,
+        ERROR_X_V_PREV,
+        Y_V_INTEGRATOR,
+        Y_V_DIFFERENTIATOR,
+        ERROR_Y_V_PREV,
+        Z_V_INTEGRATOR,
+        Z_V_DIFFERENTIATOR,
+        ERROR_Z_V_PREV,
+        X_V_SP,
+        Y_V_SP,
+        Z_V_SP
+    }; 
+
 //function definitions
-void takeoff(double target_h) {
-    motor_xpyp->setVelocity(-velo); 
-    motor_xpym->setVelocity(velo);
-    motor_xmym->setVelocity(velo);
-    motor_xmyp->setVelocity(velo);
-    x = gps->getValues()[0];
-    y = gps->getValues()[1];
-    z = gps->getValues()[2];
-    cout << z << endl;
-        
-    if (z < target_h && takeoff_it == 0) {
-        motor_xpyp->setVelocity(-300); 
-        motor_xpym->setVelocity(300);
-        motor_xmym->setVelocity(-300);
-        motor_xmyp->setVelocity(300);
-        x = gps->getValues()[0];
-        y = gps->getValues()[1];
-        z = gps->getValues()[2];
-            
-    }
+void position_measurements (double bias_x, double bias_y, double bias_z) {
 
-    if (z > target_h) {
-        takeoff_it = 1;
-        hover_gain = base_gain * abs(target_h - z);
-        motor_xpyp->setVelocity(-velo + hover_gain); 
-        motor_xpym->setVelocity(velo - hover_gain);
-        motor_xmym->setVelocity(-velo + hover_gain);
-        motor_xmyp->setVelocity(velo - hover_gain);
-        x = gps->getValues()[0];
-        y = gps->getValues()[1];
-        z = gps->getValues()[2];
-    }
-
-    if (z < target_h && takeoff_it == 1) {
-        hover_gain = base_gain * abs(target_h - z);
-        motor_xpyp->setVelocity(-velo - hover_gain); 
-        motor_xpym->setVelocity(velo + hover_gain);
-        motor_xmym->setVelocity(-velo - hover_gain);
-        motor_xmyp->setVelocity(velo + hover_gain);
-        x = gps->getValues()[0];
-        y = gps->getValues()[1];
-        z = gps->getValues()[2];
-    }
+    pos_controller.x_prev = x;
+    pos_controller.y_prev = y;
+    pos_controller.z_prev = z;
+    x = gps[2];               
+    y = gps[0];                 
+    z = gps[1];  
     
+    //computing position error term
+    pos_controller.error_x = x - pos_controller.x_prev;
+    pos_controller.error_y = y - pos_controller.z_prev;
+    pos_controller.error_z = z - pos_controller.z_prev;
+
+    //output = Kp*error + bias
+    pos_controller.x_out = pos_controller.error_x*pos_controller.kp_pos + bias_x;
+    pos_controller.y_out = pos_controller.error_y*pos_controller.kp_pos + bias_y;
+    pos_controller.z_out = pos_controller.error_z*pos_controller.kp_pos + bias_z;
+
 }
 
+void velo_measurements () {
 
-//void hover(hover_h);
+    pid_velo_controller.x_v_prev = x_v;
+    pid_velo_controller.y_v_prev = y_v;
+    pid_velo_controller.z_v_prev = z_v;
+
+    //v = dx/dt
+    x_v = (x - pos_controller.x_prev)/TIME_STEP;
+    y_v = (y - pos_controller.y_prev)/TIME_STEP;
+    z_v = (z - pos_controller.z_prev)/TIME_STEP;
+
+    //computing velocity set values, via position proportional controller outputs
+    pid_velo_controller.x_v_sp = pid_velo_controller.x_v_prev + (pos_controller.x_out)/TIME_STEP;
+    pid_velo_controller.y_v_sp = pid_velo_controller.y_v_prev + (pos_controller.y_out)/TIME_STEP;
+    pid_velo_controller.z_v_sp = pid_velo_controller.z_v_prev + (pos_controller.z_out)/TIME_STEP;
+
+    //computing velocity error term
+    pid_velo_controller.error_x_v = pid_velo_controller.x_v_sp - x_v;
+    pid_velo_controller.error_y_v = pid_velo_controller.y_v_sp - y_v;
+    pid_velo_controller.error_z_v = pid_velo_controller.z_v_sp - z_v;
+
+    //
+}
+
+void hover(double target_x, double target_y, double target_z) {
+    position_measurements(target_x, target_y, target_z);
+                   
+}
+
 
 //defining constants and variables
 
@@ -126,11 +204,10 @@ int main() {
     
     
     kb.enable(TIME_STEP);
-    
 
     //main loop
     while (robot->step(TIME_STEP) != -1) {
-        takeoff(10.0);
+        hover(10.0, 0.0, 0.0);
         
     }
 
