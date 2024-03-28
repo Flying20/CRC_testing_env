@@ -3,6 +3,10 @@
 
 class pid_velo {
     public:
+        
+        //position weight
+        double kw_pos;
+
         //constants
         double kp_velo;
         double ki_velo;

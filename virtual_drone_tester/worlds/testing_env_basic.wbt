@@ -7,8 +7,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.18187365434596126 -0.009358425343413733 0.9832773737506307 3.242712322286383
-  position 2.64565318804125 0.49838577508312176 1.0466481056849788
+  orientation -0.032859992980289465 0.043934920536296294 0.9984938375467345 1.2858748554651054
+  position 0.034738052822743073 -1.5951441029750668 0.453158193190441
 }
 Robot {
   translation 0 0 0.169
@@ -21,9 +21,7 @@ Robot {
       torqueConstants 0.0019 0
       device RotationalMotor {
         name "motor_xmyp"
-        acceleration 300
         maxVelocity 683.82
-        maxTorque 1.2
       }
       slowHelix Solid {
         translation -0.1275 0.1275 0.105
@@ -41,6 +39,19 @@ Robot {
             }
           }
         ]
+        boundingObject Box {
+          size 0.02 0.1 0.01
+        }
+        physics Physics {
+          mass 0.001
+          centerOfMass [
+            0 0 0
+          ]
+          inertiaMatrix [
+            1 1 1
+            0 0 0
+          ]
+        }
       }
     }
     Propeller {
@@ -50,9 +61,7 @@ Robot {
       torqueConstants 0.0019 0
       device RotationalMotor {
         name "motor_xmym"
-        acceleration 300
         maxVelocity 683.82
-        maxTorque 1.2
       }
       slowHelix Solid {
         translation -0.1275 -0.1275 0.105
@@ -70,6 +79,19 @@ Robot {
             }
           }
         ]
+        boundingObject Box {
+          size 0.02 0.1 0.01
+        }
+        physics Physics {
+          mass 0.001
+          centerOfMass [
+            0 0 0
+          ]
+          inertiaMatrix [
+            1 1 1
+            0 0 0
+          ]
+        }
       }
     }
     Propeller {
@@ -79,9 +101,7 @@ Robot {
       torqueConstants 0.0019 0
       device RotationalMotor {
         name "motor_xpyp"
-        acceleration 300
         maxVelocity 683.82
-        maxTorque 1.2
       }
       slowHelix Solid {
         translation 0.1275 0.1275 0.105
@@ -99,6 +119,19 @@ Robot {
             }
           }
         ]
+        boundingObject Box {
+          size 0.02 0.1 0.01
+        }
+        physics Physics {
+          mass 0.001
+          centerOfMass [
+            0 0 0
+          ]
+          inertiaMatrix [
+            1 1 1
+            0 0 0
+          ]
+        }
       }
     }
     Propeller {
@@ -108,9 +141,7 @@ Robot {
       torqueConstants 0.0019 0
       device RotationalMotor {
         name "motor_xpym"
-        acceleration 300
         maxVelocity 683.82
-        maxTorque 1.2
       }
       slowHelix Solid {
         translation 0.1275 -0.1275 0.105
@@ -128,6 +159,19 @@ Robot {
             }
           }
         ]
+        boundingObject Box {
+          size 0.02 0.1 0.01
+        }
+        physics Physics {
+          mass 0.001
+          centerOfMass [
+            0 0 0
+          ]
+          inertiaMatrix [
+            1 1 1
+            0 0 0
+          ]
+        }
       }
     }
     Shape {

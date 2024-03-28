@@ -50,10 +50,11 @@ double z_a = 0;
 #define X_PREV 0.169
 #define Y_PREV 0
 #define Z_PREV 0
-#define X_OUT 0;
-#define Y_OUT 0;
-#define Z_OUT 0;
+#define X_OUT 0
+#define Y_OUT 0
+#define Z_OUT 0
 
+#define KW_POS 0
 #define KP_VELO 1
 #define KI_VELO 1
 #define KD_VELO 1
@@ -78,6 +79,7 @@ double z_a = 0;
 
 //create controller objects
 p_pos_controller pos_controller {
+        KW_POS,
         KP_POS,
         ERROR_X,
         ERROR_Y,
@@ -128,9 +130,9 @@ void position_measurements (double bias_x, double bias_y, double bias_z) {
     z = gps[1];  
     
     //computing position error term
-    pos_controller.error_x = x - pos_controller.x_prev;
-    pos_controller.error_y = y - pos_controller.z_prev;
-    pos_controller.error_z = z - pos_controller.z_prev;
+    pos_controller.error_x = bias_x - x;
+    pos_controller.error_y = bias_y - y;
+    pos_controller.error_z = bias_z - z;
 
     //output = Kp*error + bias
     pos_controller.x_out = pos_controller.error_x*pos_controller.kp_pos + bias_x;
@@ -151,9 +153,9 @@ void velo_measurements () {
     z_v = (z - pos_controller.z_prev)/TIME_STEP;
 
     //computing velocity set values, via position proportional controller outputs
-    pid_velo_controller.x_v_sp = pid_velo_controller.x_v_prev + (pos_controller.x_out)/TIME_STEP;
-    pid_velo_controller.y_v_sp = pid_velo_controller.y_v_prev + (pos_controller.y_out)/TIME_STEP;
-    pid_velo_controller.z_v_sp = pid_velo_controller.z_v_prev + (pos_controller.z_out)/TIME_STEP;
+    pid_velo_controller.x_v_sp = pid_velo_controller.x_v_prev + (pos_controller.x_out)/TIME_STEP*pid_velo_controller.kw_pos;
+    pid_velo_controller.y_v_sp = pid_velo_controller.y_v_prev + (pos_controller.y_out)/TIME_STEP*pid_velo_controller.kw_pos;
+    pid_velo_controller.z_v_sp = pid_velo_controller.z_v_prev + (pos_controller.z_out)/TIME_STEP*pid_velo_controller.kw_pos;
 
     //computing velocity error term
     pid_velo_controller.error_x_v = pid_velo_controller.x_v_sp - x_v;
