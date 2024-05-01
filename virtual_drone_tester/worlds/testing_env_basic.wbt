@@ -14,6 +14,15 @@ Robot {
   translation 0 0 0.169
   rotation -0.13721604130040504 -0.9830451983681605 -0.12163016063110953 2.3357627338515928e-14
   children [
+    Solid {
+      translation 0 0 0.025
+      name "fuselage"
+      boundingObject Capsule {
+        height 0.135
+        radius 0.05
+        subdivision 16
+      }
+    }
     Propeller {
       shaftAxis 0.173648 0 0.984808
       centerOfThrust -0.1275 0.1275 0.105
@@ -21,6 +30,8 @@ Robot {
       torqueConstants 0.0019 0
       device RotationalMotor {
         name "motor_xmyp"
+        consumptionFactor 1
+        controlPID 1 0 0
         maxVelocity 683.82
       }
       slowHelix Solid {
@@ -61,6 +72,8 @@ Robot {
       torqueConstants 0.0019 0
       device RotationalMotor {
         name "motor_xmym"
+        consumptionFactor 1
+        controlPID 1 0 0
         maxVelocity 683.82
       }
       slowHelix Solid {
@@ -101,6 +114,8 @@ Robot {
       torqueConstants 0.0019 0
       device RotationalMotor {
         name "motor_xpyp"
+        consumptionFactor 1
+        controlPID 1 0 0
         maxVelocity 683.82
       }
       slowHelix Solid {
@@ -141,6 +156,8 @@ Robot {
       torqueConstants 0.0019 0
       device RotationalMotor {
         name "motor_xpym"
+        consumptionFactor 1
+        controlPID 1 0 0
         maxVelocity 683.82
       }
       slowHelix Solid {
@@ -210,7 +227,7 @@ Robot {
       0 0 0
     ]
   }
-  controller "quadcopter_hover"
+  controller "quadcopter_test1"
 }
 TexturedBackground {
   texture "stadium"
