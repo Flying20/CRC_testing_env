@@ -7,25 +7,34 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.05598890332621937 -0.01464062250969466 -0.9983240430225329 3.652250887452987
-  position 2.3817786742350586 -1.1053541675111287 0.5889889322933174
+  orientation -0.032859992980289465 0.043934920536296294 0.9984938375467345 1.2858748554651054
+  position -1.11738052458779 -5.507777169763313 0.7219234589185065
 }
 Robot {
   translation 0 0 0.169
-  rotation 0.9901665789674063 -0.12126525138004789 0.06974872546302954 1.9035775652472087e-13
+  rotation 0 1 0 0
   children [
+    Solid {
+      translation 0 0 0.025
+      name "fuselage"
+      boundingObject Capsule {
+        height 0.135
+        radius 0.05
+        subdivision 16
+      }
+    }
     Propeller {
       shaftAxis 0.173648 0 0.984808
       centerOfThrust -0.1275 0.1275 0.105
-      thrustConstants 0.0153 0
-      torqueConstants 0.0019 0
-      fastHelixThreshold 600
+      thrustConstants 1.437e-05 0
+      torqueConstants 1.9e-06 0
+      fastHelixThreshold 700
       device RotationalMotor {
         name "motor_xmyp"
         consumptionFactor 1
         controlPID 1 0 0
         maxVelocity 683.82
-        maxTorque 1.2
+        maxTorque 600
       }
       slowHelix Solid {
         translation -0.1275 0.1275 0.105
@@ -61,15 +70,14 @@ Robot {
     Propeller {
       shaftAxis 0.173648 0 0.984808
       centerOfThrust -0.1275 -0.1275 0.105
-      thrustConstants -0.0153 0
-      torqueConstants 0.0019 0
-      fastHelixThreshold 600
+      thrustConstants -1.437e-05 0
+      torqueConstants 1.9e-06 0
       device RotationalMotor {
         name "motor_xmym"
         consumptionFactor 1
         controlPID 1 0 0
         maxVelocity 683.82
-        maxTorque 1.2
+        maxTorque 600
       }
       slowHelix Solid {
         translation -0.1275 -0.1275 0.105
@@ -105,15 +113,15 @@ Robot {
     Propeller {
       shaftAxis -0.173648 0 0.984808
       centerOfThrust 0.1275 0.1275 0.105
-      thrustConstants -0.0153 0
-      torqueConstants 0.0019 0
-      fastHelixThreshold 600
+      thrustConstants -1.437e-05 0
+      torqueConstants 1.9e-06 0
+      fastHelixThreshold 700
       device RotationalMotor {
         name "motor_xpyp"
         consumptionFactor 1
         controlPID 1 0 0
         maxVelocity 683.82
-        maxTorque 1.2
+        maxTorque 600
       }
       slowHelix Solid {
         translation 0.1275 0.1275 0.105
@@ -149,15 +157,15 @@ Robot {
     Propeller {
       shaftAxis -0.173648 0 0.984808
       centerOfThrust 0.1275 -0.1275 0.105
-      thrustConstants 0.0153 0
-      torqueConstants 0.0019 0
-      fastHelixThreshold 600
+      thrustConstants 1.437e-05 0
+      torqueConstants 1.9e-06 0
+      fastHelixThreshold 700
       device RotationalMotor {
         name "motor_xpym"
         consumptionFactor 1
         controlPID 1 0 0
         maxVelocity 683.82
-        maxTorque 1.2
+        maxTorque 600
       }
       slowHelix Solid {
         translation 0.1275 -0.1275 0.105
@@ -226,7 +234,7 @@ Robot {
       0 0 0
     ]
   }
-  controller "quadcopter_test1"
+  controller "quadcopter_attitude"
 }
 TexturedBackground {
   texture "stadium"
